@@ -2,3 +2,9 @@ body {
     background-color: var(--bg-color);
     color: var(--main-color);
 }
+
+#music-block {
+    height: 50vh;
+    width: 80vw;
+    text-align: center;
+}
