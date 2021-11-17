@@ -8,3 +8,21 @@ body {
     width: 80vw;
     text-align: center;
 }
+
+.logo-text {
+    color: var(--main-color);
+    font-family: 'Consolas';
+    font-size: 1.75em;
+}
+.logo-text:hover {
+    color: var(--main-color);
+    text-decoration: none;
+}
+
+/* override boostrap navbar colors */
+.navbar-light .navbar-nav .nav-link {
+    color: var(--sub-color);
+}
+.navbar-light .navbar-nav .nav-link:hover {
+    color: var(--text-color);
+}
