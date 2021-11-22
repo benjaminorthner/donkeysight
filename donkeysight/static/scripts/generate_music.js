@@ -1,7 +1,7 @@
 // Create a configuration object that you pass to the generate music function
 var generate_music_defaults = {
-    	n : 1000;
-        range: [];
+    	n : 1000,
+        range: [1, 88]
 }
 
 /**
@@ -10,27 +10,69 @@ var generate_music_defaults = {
 * returns list of note names in vexflow accepted format
 *
 * @param {number} n total number of notes
-* @param {} range highest and lowest note that should be generated.
-* @param {} key which key is the music in
-*
+* @param {number} max highest note (in piano key numbers 1-88)
+* @param {number} min lowest note (in piano key numbers 1-88)
+* @param {number} scale which scale/key is the music in (a maj = 1, a# maj = 2, ...)
+* 
+* Furute params: chord probabilities (maybe list where position determines prob of chord with note number as index)
+* list of all allowed chord types
+* need a function that generates acceptable chords
 */
 function generate_music(conf) {
 
+    let note_list = [];
+
+    // loop n times each time adding a new note
+    for (let index = 0; index < conf.n; index++) {
+        
+        // get random number in given range
+        let newNote = Math.floor(Math.random() * (conf.max - conf.min + 1) ) + conf.min;
+        
+        // check if note is in the right key/scale
+        if (checkScale(newNote) == conf.scale) {
+            
+        }
+    }
 }
 
-
 /**
- * Convert piano key number to Midi note number
+ * Returns a list of all keys in the specified major scale
+ * in piano key number
+ * @param {number} scale root note in piano key numbers {a = 1, a# = 2}
  */
-function pianoToMidi(i){
-    return i + 20;
+function generateScale(scale) {
+    const scaleNotes = [];
+
+    // add 1 octave of the scale
+    for (let i = scale; i <= 88; i += 12) {
+        scaleNotes.concat([
+            i,
+            i + 2,
+            i + 4,
+            i + 5,
+            i + 7,
+            i + 9,
+            i + 11
+        ]);
+    };
+
+    // removes all notes > 88
+    for (let i = scaleNotes.length(); scaleNotes[scaleNotes.length() - 1] <= 88; i++){
+        if (scaleNotes[i] > 88) {
+            scaleNotes.pop();
+        }
+    }
+
+    return scaleNotes;
 }
 
 /**
- * Convert midi note number to piano key number
+ *  Checks if a note is contained within a scale
+ * @param {number} i piano key number
+ * @param {number} scale piano key number of the root 
  */
-function midiToPiano(i){
-    return i - 20;
+function checkScale(i, scale){
+
 }
 
 /**
@@ -43,7 +85,7 @@ function pianoToVex(i, duration){
     let octave = Math.floor( (i + 8) / 12)
 
     // list all note names so the are indexed with i % 12
-    let letters = ['a', 'a#', 'b', 'c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#'];
+    const letters = ['a', 'a#', 'b', 'c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#'];
 
     return letters[i % 12] + octave + '/' + duration;
 }
