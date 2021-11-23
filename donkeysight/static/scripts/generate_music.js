@@ -41,11 +41,11 @@ function generate_music(conf) {
  * @param {number} scale root note in piano key numbers {a = 1, a# = 2}
  */
 function generateScale(scale) {
-    const scaleNotes = [];
+    let scaleNotes = [];
 
     // add 1 octave of the scale
     for (let i = scale; i <= 88; i += 12) {
-        scaleNotes.concat([
+        scaleNotes = scaleNotes.concat([
             i,
             i + 2,
             i + 4,
@@ -57,9 +57,12 @@ function generateScale(scale) {
     };
 
     // removes all notes > 88
-    for (let i = scaleNotes.length(); scaleNotes[scaleNotes.length() - 1] <= 88; i++){
-        if (scaleNotes[i] > 88) {
-            scaleNotes.pop();
+    while (true) {
+        let lastNote = scaleNotes.pop();
+        if (lastNote <= 88){
+            // add note back in and break
+            scaleNotes.push(lastNote);
+            break;
         }
     }
 
