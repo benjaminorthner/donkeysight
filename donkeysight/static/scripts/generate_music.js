@@ -1,9 +1,3 @@
-// Create a configuration object that you pass to the generate music function
-var generate_music_defaults = {
-    	n : 1000,
-        range: [1, 88]
-}
-
 /**
 * Generates the music based on the chosen parameters.
 *
@@ -20,19 +14,27 @@ var generate_music_defaults = {
 */
 function generate_music(conf) {
 
-    let note_list = [];
-
-    // loop n times each time adding a new note
-    for (let index = 0; index < conf.n; index++) {
-        
-        // get random number in given range
-        let newNote = Math.floor(Math.random() * (conf.max - conf.min + 1) ) + conf.min;
-        
-        // check if note is in the right key/scale
-        if (checkScale(newNote) == conf.scale) {
-            
+    // use defaults for key value pairs absent in passed configuration object
+    for (var key in generate_music_defaults){
+        if (!conf[key]) {
+            conf[key] = generate_music_defaults[key];
         }
     }
+
+    let note_list = [];
+
+    // get all notes in current scale
+    scaleNotes = generateScale(conf.scale);
+
+    // trim scale to match min and max values
+    scaleNotes = scaleNotes.slice(indexOfSmaller(scaleNotes, conf.min, false), indexOfSmaller(scaleNotes, conf.max, true))
+
+    //choose n random notes from the sliced scale, convert to vex format and push to note list
+    for (let index = 0; index < conf.n; index++) {
+        note_list.push(pianoToVex(scaleNotes[Math.floor(Math.random() * scaleNotes.length)]));
+    }
+
+    return note_list;
 }
 
 /**
@@ -69,21 +71,17 @@ function generateScale(scale) {
     return scaleNotes;
 }
 
-/**
- *  Checks if a note is contained within a scale
- * @param {number} i piano key number
- * @param {number} scale piano key number of the root 
- */
-function checkScale(i, scale){
-
-}
 
 /**
  * Convert piano key number to vexflow key notation
  * @param {number} i piano key number of note
- * @param {string} duration the duration of the note: e.g. q = quarter note
+ * @param {string} duration the duration of the note: e.g. 'q' = quarter note
  */
-function pianoToVex(i, duration){
+function pianoToVex(i, duration = 'q'){
+
+    // change from 1 indexing to 0 indexing
+    i--;
+
     // find octave of note
     let octave = Math.floor( (i + 8) / 12)
 
