@@ -7,6 +7,7 @@
 * @param {number} max highest note (in piano key numbers 1-88)
 * @param {number} min lowest note (in piano key numbers 1-88)
 * @param {number} scale which scale/key is the music in (a maj = 1, a# maj = 2, ...)
+* @param {number} max_interval largest interval between consecutive notes (in half steps)
 * 
 * Furute params: chord probabilities (maybe list where position determines prob of chord with note number as index)
 * list of all allowed chord types
@@ -31,7 +32,9 @@ function generate_music(conf) {
 
     //choose n random notes from the sliced scale, convert to vex format and push to note list
     for (let index = 0; index < conf.n; index++) {
-        note_list.push(pianoToVex(scaleNotes[Math.floor(Math.random() * scaleNotes.length)]));
+        // put new note into a list (so chords are easily supported later)
+        let newNote = [pianoToLO(scaleNotes[Math.floor(Math.random() * scaleNotes.length)])];
+        note_list.push(newNote);
     }
 
     return note_list;
@@ -69,24 +72,4 @@ function generateScale(scale) {
     }
 
     return scaleNotes;
-}
-
-
-/**
- * Convert piano key number to vexflow key notation
- * @param {number} i piano key number of note
- * @param {string} duration the duration of the note: e.g. 'q' = quarter note
- */
-function pianoToVex(i, duration = 'q'){
-
-    // change from 1 indexing to 0 indexing
-    i--;
-
-    // find octave of note
-    let octave = Math.floor( (i + 8) / 12)
-
-    // list all note names so the are indexed with i % 12
-    const letters = ['a', 'a#', 'b', 'c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#'];
-
-    return letters[i % 12] + octave + '/' + duration;
 }

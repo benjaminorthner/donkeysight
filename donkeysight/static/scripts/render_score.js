@@ -28,18 +28,25 @@ stave.addClef("treble").addTimeSignature("4/4");
 // Connect it to the rendering context and draw!
 stave.setContext(context).draw();
 
-// Adding notes
-var notes = [
-    new VF.StaveNote({clef : "treble", keys: ["c/4"], duration: "q"}),
-    new VF.StaveNote({clef : "treble", keys: ["c/5", "e/5", "d/5"], duration: "q"}),
-    new VF.StaveNote({clef : "treble", keys: ["c/4"], duration: "q"}),
-    new VF.StaveNote({clef : "treble", keys: ["c/5", "e/5", "d/5"], duration: "q"})
-];
 
-var voice = new VF.Voice({num_beats: 4, beat_value: 4});
+// generate notes and add them
+let note_count = 10
+let note_list = generate_music({
+    n : note_count,
+    min : 50,
+    max : 60,
+    scale : 2})
+
+// converting notes to list of vexflow StaveNote objects
+var notes = []
+for (let i = 0; i < note_list.length; i++) {
+    notes.push(new VF.StaveNote({clef : "treble", keys: note_list[i], duration: "q"}));
+}
+
+var voice = new VF.Voice({num_beats: note_count, beat_value: 4});
 voice.addTickables(notes);
 
-var formatter = new VF.Formatter().joinVoices([voice]).format([voice], 700);
+var formatter = new VF.Formatter().joinVoices([voice]).format([voice], 600);
 
 voice.draw(context, stave);
 

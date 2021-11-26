@@ -6,6 +6,7 @@ var generate_music_defaults = {
     min: 13,
     max: 80,
     scale: 4, // Cmaj
+    max_interval: 88,
 }
 
 
