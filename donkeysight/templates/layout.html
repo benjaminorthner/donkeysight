@@ -22,12 +22,10 @@
     </head>
 
     <body>
-        <!-- Set up Grid for site -->
-        <!-- https://css-tricks.com/snippets/css/complete-guide-grid/ --> 
-        <div class="container">
-            <div class="row">
-                <div class="col" style="text-align: center;">
-
+        <div class="space-around">
+            <div></div>
+            <div class="center-content">
+                <div>
                     <!-- use boostrap navbar -->
                     <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: var(--bg-color);">
                         <a class="logo-text", href="/", style="margin-right: 1rem;">
@@ -36,34 +34,38 @@
                         </a>
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav">
-                              <li class="nav-item">
+                            <li class="nav-item">
                                 <a class="nav-link" href="/">Settings <span class="sr-only">(current)</span></a>
-                              </li>
-                              <li class="nav-item">
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="/">Statistics</a>
-                              </li>
-                              <li class="nav-item">
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="/">Leaderboard</a>
-                              </li>
+                            </li>
                             </ul>
-                          </div>
-                      </nav>
-
+                        </div>
+                    </nav>
                 </div>
-                <div class="col" style="text-align: center;">
-                    <!-- nothing here yet -->
+        
+                <div>
+                    <!-- FUTURE QUICK SETTINGS HERE-->
                 </div>
-            </div>
-            <div class="row">
-                <div class="col">
+                <div class="music-box" id='music-box'>
                     {% block body_center %}{% endblock %}
                 </div>
+                
+                <div id="info-bar">
+                    bottom info bar
+                </div>
+
             </div>
+            <div></div>
         </div>
 
         <!-- sheet music drawing script -->
-        <script src="static/scripts/index.js"></script>
         <script src="static/scripts/helpers.js"></script>
+        <script src="static/scripts/index.js"></script>
         <script src="/static/scripts/generate_music.js"></script>
         <script src="/static/scripts/render_score.js"></script>
     </body>
