@@ -35,7 +35,7 @@ function indexOfSmaller(array, searchElement, above){
     i--;
 
     // find octave of note
-    let octave = Math.floor( (i + 8) / 12)
+    let octave = Math.floor( (i + 9) / 12)
 
     // list all note names so the are indexed with i % 12
     const letters = ['a', 'a#', 'b', 'c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#'];
@@ -50,10 +50,22 @@ function indexOfSmaller(array, searchElement, above){
 function LOToPiano(i){
     // split note into letter and octave
     let [letter, octave] = i.split("/");
+    octave = parseInt(octave)
 
     // list all note names
     const letters = ['a', 'a#', 'b', 'c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#'];
+    let letter_number = letters.findIndex(element => element === letter.toLowerCase());
 
-    // + 1 to switch from 0 based to 1 based indexing
-    let pianoKeyNumber = 1 + letters.findIndex(element => element === letter.toLowerCase()) + 12 * parseInt(octave);
+    if (letter_number < 3 && octave != 0) {;
+        return letter_number + 12 * (octave) + 1
+
+    } else if (letter_number >= 3 && octave != 0){
+        return letter_number + 12 * (octave - 1) + 1;
+
+    } else if (letter_number < 3){
+        return letter_number + 1;
+    } else {
+        // note doesn't exist
+        throw 'letter / octave notation note does not exist';
+    }
 }
