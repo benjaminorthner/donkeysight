@@ -8,7 +8,6 @@ const renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
 // Configure the rendering context.
 const box_height = div.offsetHeight;
 const box_width = div.offsetWidth;
-console.log(box_height)
 renderer.resize(box_width, box_height);
 
 const context = renderer.getContext();
