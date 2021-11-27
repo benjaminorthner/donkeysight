@@ -22,18 +22,21 @@ function generate_music(conf) {
         }
     }
 
-    let note_list = [];
-
     // get all notes in current scale
     scaleNotes = generateScale(conf.scale);
 
     // trim scale to match min and max values
-    scaleNotes = scaleNotes.slice(indexOfSmaller(scaleNotes, conf.min, false), indexOfSmaller(scaleNotes, conf.max, true))
+    let slicedScaleNotes = scaleNotes.slice(indexOfSmaller(scaleNotes, conf.min, false), indexOfSmaller(scaleNotes, conf.max, true))
 
     //choose n random notes from the sliced scale, convert to vex format and push to note list
+    let note_list = [];
     for (let index = 0; index < conf.n; index++) {
+
+        // remove notes where interval from previous note is too big
+        var filteredScaleNotes = removeLargeIntervals(note_list, slicedScaleNotes, conf.max_interval)
+
         // put new note into a list (so chords are easily supported later)
-        let newNote = [pianoToLO(scaleNotes[Math.floor(Math.random() * scaleNotes.length)])];
+        let newNote = [pianoToLO(filteredScaleNotes[Math.floor(Math.random() * filteredScaleNotes.length)])];
         note_list.push(newNote);
     }
 
@@ -73,3 +76,25 @@ function generateScale(scale) {
 
     return scaleNotes;
 }
+
+/**
+ * Removes intervals that are larger than the specified max
+ * 
+ * @param {Array} prev_notes list containing all previous notes (each chord is an array)
+ * @param {Array} available_notes list of possible next notes
+ * @param {number} max_interval max interval between previous and next note
+ * @returns array containing possible next notes within allowed interval range
+ */
+function removeLargeIntervals(prev_notes, available_notes, max_interval){
+
+    // if no previous notes, just return all options
+    if (prev_notes.length == 0){
+        return available_notes;
+    }
+
+    // else filter out notes where interval to previous note is > max_interval
+    return available_notes.filter(function(value, index, arr) {
+        return Math.abs(LOToPiano(prev_notes[prev_notes.length - 1][0]) - value) <= max_interval;
+    });
+}
+
