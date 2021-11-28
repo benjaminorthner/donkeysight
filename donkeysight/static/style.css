@@ -36,11 +36,19 @@ body {
 }
 
 .center-content > div{
-    border: solid 0px #fff;
+    border: solid 1px #fff;
 }
-.music-box {
+
+.music-container {
     grid-column: 1/3;
-    text-align: center;
+    display: grid;
+    grid-gap: 1em;
+    padding: 1em;
+    grid-template-rows: 1fr 1fr;
+}
+
+.music-container > div {
+    border: solid 1px #f00
 }
 
 #info-bar {
