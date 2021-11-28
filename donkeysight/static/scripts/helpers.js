@@ -10,7 +10,7 @@
  * @param {number} searchElement element to be searched for
  * @param {boolean} above if true index of value above (greater than) searchElement is returned
  */
-function indexOfSmaller(array, searchElement, above){
+function indexOfSmaller(array, searchElement, above) {
     for (let i = 0; i < array.length; i++) {
         if (above){
             if (array[i] > searchElement) {
@@ -20,16 +20,24 @@ function indexOfSmaller(array, searchElement, above){
         else if (array[i] >= searchElement){
             return i;
         }
-
     };
 }
 
 
 /**
  * Convert piano key number to letter/octave key notation
- * @param {number} i piano key number of note
+ * @param {} i piano key number of note (or array of notes)
  */
- function pianoToLO(i){
+ function pianoToLO(i) {
+    
+    // if i is an array, recursively convert each element individually and return new array
+    if (Array.isArray(i)) {
+        let newArray = []
+        i.forEach( (note) => {
+            newArray.push(pianoToLO(note));
+        });
+        return newArray;
+    }
 
     // change from 1 indexing to 0 indexing
     i--;
@@ -45,9 +53,20 @@ function indexOfSmaller(array, searchElement, above){
 
 /**
  * Converts from letter/octave notation to piano key number, e.g. a#/1 -> 13
- * @param {string} i letter/octave notation form of note
+ * @param {} i letter/octave notation form of note (or array of notes)
+ * @returns note(s) in piano numbers
  */
-function LOToPiano(i){
+function LOToPiano(i) {
+
+    // if i is an array, recursively convert each element individually and return new array
+    if (Array.isArray(i)) {
+        let newArray = []
+        i.forEach( (note) => {
+            newArray.push(LOToPiano(note));
+        });
+        return newArray;
+    }
+
     // split note into letter and octave
     let [letter, octave] = i.split("/");
     octave = parseInt(octave)
@@ -68,4 +87,35 @@ function LOToPiano(i){
         // note doesn't exist
         throw 'letter / octave notation note does not exist';
     }
+}
+
+/**
+ * convert from piano key numbering to midi numbering
+ * @param {} i note or array of notes in piano numering
+ * @returns note(s) in midi numbers
+ */
+function pianoToMIDI(i) {
+
+    // if i is an array, recursively convert each element individually and return new array
+    if (Array.isArray(i)) {
+        let newArray = []
+        i.forEach( (note) => {
+            newArray.push(pianoToMIDI(note));
+        });
+        return newArray;
+    }
+    return i + 20;
+}
+
+function MIDIToPiano(i) {
+    
+    // if i is an array, recursively convert each element individually and return new array
+    if (Array.isArray(i)) {
+        let newArray = []
+        i.forEach( (note) => {
+            newArray.push(MIDIToPiano(note));
+        });
+        return newArray;
+    }
+    return i - 20;
 }
