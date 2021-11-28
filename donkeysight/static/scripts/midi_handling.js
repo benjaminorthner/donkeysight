@@ -8,7 +8,6 @@ if (navigator.requestMIDIAccess) {
 
 // if access successful 
 function onMIDISuccess(midiAccess) {
-    console.log(midiAccess);
     midiAccess.addEventListener('statechange', updateDevices);
 
     const inputs = midiAccess.inputs;
@@ -28,8 +27,8 @@ function handleMIDIInput(input) {
     switch (command) {
         case 144: // noteOn
         if (velocity > 0) {
-            noteOn(note, velocity);
-        } else {
+            noteOn(note);
+        } else { // for midi keyboards that use vel = 0 instead of command=128
             noteOff(note);
         }
         break;
@@ -40,13 +39,30 @@ function handleMIDIInput(input) {
     }
 }
 
-
-function noteOn(note, velocity) {
-    console.log(note, velocity)
+/**
+ * Increases currently held note count by 1 and pushes note 
+ * onto list of notes held since last time without notes
+ * @param {number} note midi number
+ */
+function noteOn(note) {
+    midi_vars.noteOnCount++;
+    midi_vars.currentlyOn.push(note);
 }
 
+/**
+ * reduces note count by 1
+ * if all notes released pushes last set of notes onto stream,
+ * grouped in an array
+ * @param {number} note 
+ */
 function noteOff(note) {
-    console.log(note)
+    midi_vars.noteOnCount--;  
+
+    if (midi_vars.noteOnCount === 0) {
+        midi_vars.stream.push(midi_vars.currentlyOn);
+        midi_vars.currentlyOn = [];
+        console.log(midi_vars.stream)
+    }
 }
 
 
@@ -55,6 +71,7 @@ function updateDevices(event) {
     console.log(event)
     console.log(`Name: ${event.port.name}\nBrand: ${event.port.manufacturer}\nState: ${event.port.state}\nType: ${event.port.type}`)
 }
+
 // if access unsuccessful
 function onMIDIFailure() {
     console.log('Could not access your MIDI devices.');

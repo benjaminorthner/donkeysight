@@ -9,4 +9,10 @@ var generate_music_defaults = {
     max_interval: 88
 }
 
-
+// object that groups variables related to reading midi input
+var midi_vars = {
+    noteOnCount : 0,
+    noteOffCount : 0,
+    currentlyOn: [],
+    stream: []
+}

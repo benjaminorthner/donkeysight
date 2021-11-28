@@ -29,7 +29,6 @@ function indexOfSmaller(array, searchElement, above) {
  * @param {} i piano key number of note (or array of notes)
  */
  function pianoToLO(i) {
-    
     // if i is an array, recursively convert each element individually and return new array
     if (Array.isArray(i)) {
         let newArray = []
@@ -39,6 +38,10 @@ function indexOfSmaller(array, searchElement, above) {
         return newArray;
     }
 
+    if (!(i >= 1 && i <= 88)) {
+        console.log("INVALID PIANO -> LO CONVERSION")
+    }
+    
     // change from 1 indexing to 0 indexing
     i--;
 
@@ -57,7 +60,6 @@ function indexOfSmaller(array, searchElement, above) {
  * @returns note(s) in piano numbers
  */
 function LOToPiano(i) {
-
     // if i is an array, recursively convert each element individually and return new array
     if (Array.isArray(i)) {
         let newArray = []
@@ -85,17 +87,16 @@ function LOToPiano(i) {
         return letter_number + 1;
     } else {
         // note doesn't exist
-        throw 'letter / octave notation note does not exist';
+        console.log('letter / octave notation note does not exist');
     }
 }
 
 /**
  * convert from piano key numbering to midi numbering
- * @param {} i note or array of notes in piano numering
- * @returns note(s) in midi numbers
+ * @param {} i note or array of notes in piano numbering
+ * @returns note(s) in midi numbering
  */
 function pianoToMIDI(i) {
-
     // if i is an array, recursively convert each element individually and return new array
     if (Array.isArray(i)) {
         let newArray = []
@@ -104,11 +105,18 @@ function pianoToMIDI(i) {
         });
         return newArray;
     }
+    if (!(i >= 1 && i <= 88)) {
+        console.log("INVALID PIANO -> MIDI CONVERSION")
+    }
     return i + 20;
 }
 
+/**
+ * convert midi note numbering to piano numbering
+ * @param {} i note or array of notes in midi numbering
+ * @returns note(s) in piano numbering
+ */
 function MIDIToPiano(i) {
-    
     // if i is an array, recursively convert each element individually and return new array
     if (Array.isArray(i)) {
         let newArray = []
@@ -117,5 +125,36 @@ function MIDIToPiano(i) {
         });
         return newArray;
     }
+    if (!(i >= 21 && i <= 108)) {
+        console.log("INVALID MIDI -> PIANO CONVERSION");
+    }
     return i - 20;
+}
+
+function MIDIToLO(i) {
+    // if i is an array, recursively convert each element individually and return new array
+    if (Array.isArray(i)) {
+        let newArray = []
+        i.forEach( (note) => {
+            newArray.push(MIDIToLO(note));
+        });
+        return newArray;
+    }
+    if (!(i >= 21 && i <= 108)) {
+        console.log("INVALID MIDI -> LO CONVERSION");
+    }
+    return pianoToLO(MIDIToPiano(i))
+    
+}
+
+function LOToMIDI(i) {
+    // if i is an array, recursively convert each element individually and return new array
+    if (Array.isArray(i)) {
+        let newArray = []
+        i.forEach( (note) => {
+            newArray.push(LOToMIDI(note));
+        });
+        return newArray;
+    }
+    return pianoToMIDI(LOToPiano(i))
 }
