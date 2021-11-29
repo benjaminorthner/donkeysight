@@ -35,9 +35,7 @@ body {
     grid-gap: 1em;
 }
 
-.center-content > div{
-    border: solid 1px #fff;
-}
+
 
 #music-container {
     grid-column: 1/3;
@@ -46,8 +44,12 @@ body {
     padding: 1em;
 }
 
+.center-content > div{
+    border: solid 0px #fff;
+}
+
 #music-container > div {
-    border: solid 1px #f00
+    border: solid 0px #f00
 }
 
 #info-bar {

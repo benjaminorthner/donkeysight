@@ -1,13 +1,13 @@
 const VF = Vex.Flow;
 
 // generate notes and add them
-let note_count = 30
+let note_count = 60
 let note_list = generate_music({
     n : note_count,
     max_interval: 6});
 
 // set how many notes you want per row
-let notes_per_row = 10
+let notes_per_row = 20
 
 // calculate how many rows we need
 let row_count = Math.ceil(note_count / notes_per_row)
@@ -20,6 +20,9 @@ for (var row = 0; row < row_count; row++) {
     rowsDivs.push(addStaveElement())
 }
 
+// update CSS for #music-container to match number of rows
+const music_container = document.getElementById("music-container")
+music_container.style.gridTemplateRows = "repeat(" + row_count + ", 1fr)";
 
 // draw music into each rowDiv
 rowsDivs.forEach((div, row) => {
@@ -29,6 +32,9 @@ rowsDivs.forEach((div, row) => {
     // Configure the rendering context.
     const box_height = div.offsetHeight;
     const box_width = div.offsetWidth;
+    console.log(box_height)
+    console.log(box_width)
+    
     renderer.resize(box_width, box_height);
 
     const context = renderer.getContext();
@@ -79,9 +85,6 @@ rowsDivs.forEach((div, row) => {
 // remove stave-target from DOM as all staves are now rendered (maybe change when dynamically rendering staves)
 document.getElementById("stave-target").remove();
 
-// update CSS for #music-container to match number of rows
-const music_container = document.getElementById("music-container")
-music_container.style.gridTemplateRows = "repeat(" + row_count + ", 1fr)";
 
 function addStaveElement () {
     // create a new div element and set its id
