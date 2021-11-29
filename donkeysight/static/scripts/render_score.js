@@ -1,5 +1,7 @@
 const VF = Vex.Flow;
 
+
+
 // Create an SVG renderer and attach it to the DIV element named "vf".
 const div = document.getElementById("music-box");
 
@@ -28,6 +30,8 @@ stave.setY((box_height - stave.getBottomY()) / 2)
 
 // Add a clef and time signature.
 stave.addClef("treble").addTimeSignature("4/4");
+let keySignature = 'A'
+stave.addKeySignature(keySignature)
 
 // Connect it to the rendering context and draw!
 stave.setContext(context).draw();
@@ -47,6 +51,9 @@ for (let i = 0; i < note_list.length; i++) {
 
 var voice = new VF.Voice({num_beats: note_count, beat_value: 4});
 voice.addTickables(notes);
+
+//apply accidental symbols based on key signature
+VF.Accidental.applyAccidentals([voice], keySignature);
 
 var formatter = new VF.Formatter().joinVoices([voice]).format([voice], box_width);
 
