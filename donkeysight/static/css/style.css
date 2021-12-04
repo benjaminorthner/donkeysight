@@ -1,6 +1,7 @@
 body {
     background-color: var(--bg-color);
     color: var(--main-color);
+    overflow-x: hidden;
 }
 
 .logo-text {
@@ -45,11 +46,11 @@ body {
 }
 
 .center-content > div{
-    border: solid 0px #fff;
+    border: solid 1px #fff;
 }
 
-#music-container > div {
-    border: solid 0px #f00
+#music-container > div:not(#caret) {
+    border: solid 1px #f00
 }
 
 #info-bar {

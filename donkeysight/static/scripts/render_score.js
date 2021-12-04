@@ -1,3 +1,5 @@
+// add stem direction
+
 const VF = Vex.Flow;
 
 // generate notes and add them
@@ -25,6 +27,7 @@ const music_container = document.getElementById("music-container")
 music_container.style.gridTemplateRows = "repeat(" + row_count + ", 1fr)";
 
 // draw music into each rowDiv
+
 rowsDivs.forEach((div, row) => {
     // create an SVG renderer and attach it to the div element
     const renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
@@ -54,7 +57,8 @@ rowsDivs.forEach((div, row) => {
     stave.setY((box_height - stave.getBottomY()) / 2)
 
     // Add a clef and time signature.
-    stave.addClef("treble").addTimeSignature("4/4");
+    stave.addClef("treble")
+    stave.addTimeSignature("4/4");
     let keySignature = 'A'
     stave.addKeySignature(keySignature)
 
@@ -76,28 +80,21 @@ rowsDivs.forEach((div, row) => {
     //apply accidental symbols based on key signature
     VF.Accidental.applyAccidentals([voice], keySignature); 
 
-    // subtract 10% of boxwidth so that notes not drawn too far right
-    var formatter = new VF.Formatter().joinVoices([voice]).format([voice], box_width - 0.1 * box_width);
+    var formatter = new VF.Formatter().joinVoices([voice]).format([voice], box_width);
 
     voice.draw(context, stave);
 });
-
-// remove stave-target from DOM as all staves are now rendered (maybe change when dynamically rendering staves)
-document.getElementById("stave-target").remove();
 
 
 function addStaveElement () {
     // create a new div element and set its id
     const newDiv = document.createElement("div");
+    newDiv.setAttribute("class", "stave")
     newDiv.setAttribute("id", "stave-" + row);
 
-    // add the newly created element into the DOM, above stave-target
-    const currentDiv = document.getElementById("stave-target");
-
-    // get parent div
-    const parentDiv = document.getElementById("music-container")
-    parentDiv.insertBefore(newDiv, currentDiv);
-
+    // append to parentDiv
+    document.getElementById("music-container").appendChild(newDiv);
+    
     // return div to be used as render target for Vexflow
     return newDiv;
 }

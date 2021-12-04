@@ -17,7 +17,9 @@
 
         <!-- load theme then stylesheet (in that order)-->
         <link rel="stylesheet" href="static/themes/serika_dark.css" id="currentTheme">
-        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/css/style.css">
+        <link rel="stylesheet" href="/static/css/caret.css">
+        <link rel="stylesheet" href="/static/css/animations.css">
 
     </head>
 
@@ -52,8 +54,9 @@
                     <!-- FUTURE QUICK SETTINGS HERE-->
                 </div>
                 <div id="music-container">
-                    <!-- Staves are inserted via js before the 'stave-target' div -->
-                    <div id='stave-target'></div>
+                    <div id="caret"></div>
+        
+                    <!-- Staves are inserted via here js -->
                 </div>
                 
                 <div id="info-bar">
@@ -70,5 +73,6 @@
         <script src="/static/scripts/generate_music.js"></script>
         <script src="/static/scripts/render_score.js"></script>
         <script src="/static/scripts/midi_handling.js"></script>
+        <script src="/static/scripts/caret.js"></script>
     </body>
 </html>
