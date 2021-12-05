@@ -35,7 +35,7 @@ function renderStaveIntoElement (div, row) {
 
     // Configure the rendering context.
     let box_height = div.offsetHeight;
-    let box_width = div.offsetWidth;
+    let box_width = 0.995*div.offsetWidth;
     renderer.resize(box_width, box_height);
 
     const context = renderer.getContext();
@@ -85,10 +85,9 @@ function renderStaveIntoElement (div, row) {
 
     // find position of first note (tickable)
     // stave_start + 0.5 * width of gap to first note 
-    let start_x = voice.tickables[0].stave.start_x + 0.5 * voice.tickables[0].width
-    console.log(start_x)
-    console.log(voice.tickables[0])
+    let start_x = voice.tickables[0].stave.start_x + 0.5 * voice.tickables[0].width;
 
+ 
     // place the caret at the start of the line
     const caretHeight = parseInt($(".caret").css("height"));
     const caretWidth = parseInt($(".caret").css("width"));

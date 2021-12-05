@@ -32,7 +32,7 @@ body {
 .center-content {
     display:grid;
     grid-template-columns: 2fr 1fr;
-    grid-template-rows: 1fr 5fr 1fr;
+    grid-template-rows: 1fr 10fr 0.75fr;
     grid-gap: 1em;
 }
 
@@ -43,17 +43,19 @@ body {
 #music-container {
     grid-column: 1/3;
     display: grid;
-    grid-gap: 1em;
-    padding: 1em;
+    padding: 0em;
+}
+
+.stave {
+    max-height: 9em;
+    max-width: 100%;
+    border: solid 1px #f00;
 }
 
 .center-content > div{
-    border: solid 0px #fff;
+    border: solid 1px #fff;
 }
 
-#music-container > div:not(.caret) {
-    border: solid 0px #f00
-}
 
 #info-bar {
     grid-column: 1/3;

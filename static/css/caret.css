@@ -2,7 +2,7 @@
     height: 90px;
     width: 3px;
     background: var(--caret-color);
-    border-radius: 5px;
+    border-radius: 3px;
     position: absolute;
     transform-origin: top left;
     animation: caretFlashSmooth 1s infinite;
