@@ -50,22 +50,17 @@ function renderStaveIntoElement (div, row) {
     // Set color when stave is created (stave isnt connected to defaults for some reason)
     // http://www.vexflow.com/build/docs/stave.html
     let stave = new VF.Stave(0, 0, box_width, {fill_style: 'var(--sub-color)', space_above_staff_ln: 0});
-    stave.measure = row + 1;
-    stave.resetLines()
 
     // vertically center stave in div 
     // find VF.Stave properties here https://github.com/0xfe/vexflow/blob/master/src/stave.ts
     stave.setY((box_height - (stave.getBottomLineBottomY() - stave.getTopLineTopY())) / 2)
  
-    
     //  Add a clef and time signature.
     stave.addClef("treble")
-    stave.addTimeSignature("4/4");
+    //stave.addTimeSignature("4/4");
     let keySignature = 'A'
     stave.addKeySignature(keySignature)
 
-
-    
     // Connect it to the rendering context and draw!
     stave.setContext(context).draw();
     
@@ -88,8 +83,18 @@ function renderStaveIntoElement (div, row) {
 
     voice.draw(context, stave);
 
+    // find position of first note (tickable)
+    // stave_start + 0.5 * width of gap to first note 
+    let start_x = voice.tickables[0].stave.start_x + 0.5 * voice.tickables[0].width
+    console.log(start_x)
+    console.log(voice.tickables[0])
+
     // place the caret at the start of the line
-    div.getElementsByClassName("caret")[0].setAttribute("style", `transform: translateX(${box_width/2}px) translateY(${(box_height - 60)/2}px)`)
+    const caretHeight = parseInt($(".caret").css("height"));
+    const caretWidth = parseInt($(".caret").css("width"));
+
+    div.getElementsByClassName("caret")[0].setAttribute("style", 
+        `transform: translateX(${start_x}px) translateY(${(box_height - caretHeight)/2}px)`)
 }
 
 function addStaveElement () {

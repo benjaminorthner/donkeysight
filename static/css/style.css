@@ -48,11 +48,11 @@ body {
 }
 
 .center-content > div{
-    border: solid 1px #fff;
+    border: solid 0px #fff;
 }
 
 #music-container > div:not(.caret) {
-    border: solid 1px #f00
+    border: solid 0px #f00
 }
 
 #info-bar {
