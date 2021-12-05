@@ -94,7 +94,7 @@ function renderStaveIntoElement (div, row) {
     const caretWidth = parseInt($(".caret").css("width"));
 
     div.getElementsByClassName("caret")[0].setAttribute("style", 
-        `transform: translateX(${start_x}px) translateY(${(box_height - caretHeight)/2}px)`)
+        `transform: translateX(${start_x - caretWidth / 2}px) translateY(${(box_height - caretHeight)/2}px)`)
 }
 
 function addStaveElement () {
