@@ -32,7 +32,7 @@ body {
 .center-content {
     display:grid;
     grid-template-columns: 2fr 1fr;
-    grid-template-rows: 1fr 10fr 0.75fr;
+    grid-template-rows: 1fr 10fr 2fr;
     grid-gap: 1em;
 }
 
