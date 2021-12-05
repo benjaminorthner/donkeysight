@@ -40,21 +40,27 @@ body {
     opacity: 0;
 }
 
-#music-container {
+#music-space-around {
     grid-column: 1/3;
+    display: grid;
+    grid-template-rows: 1fr min-content 1fr;
+}
+
+#music-container {
     display: grid;
     padding: 0em;
 }
 
+
 .stave {
     max-height: 9em;
-    max-width: 100%;
-    border: solid 1px #f00;
+    border: solid 0px #f00;
 }
 
 .center-content > div{
-    border: solid 1px #fff;
+    border: solid 0px #fff;
 }
+
 
 
 #info-bar {
