@@ -27,44 +27,48 @@ const music_container = document.getElementById("music-container")
 music_container.style.gridTemplateRows = "repeat(" + row_count + ", 1fr)";
 
 // draw music into each rowDiv
+rowsDivs.forEach(renderStaveIntoElement);
 
-rowsDivs.forEach((div, row) => {
+function renderStaveIntoElement (div, row) {
     // create an SVG renderer and attach it to the div element
     const renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
 
     // Configure the rendering context.
-    const box_height = div.offsetHeight;
-    const box_width = div.offsetWidth;
-    console.log(box_height)
-    console.log(box_width)
-    
+    let box_height = div.offsetHeight;
+    let box_width = div.offsetWidth;
     renderer.resize(box_width, box_height);
 
     const context = renderer.getContext();
-    context.setFont("Arial", 10, "").setBackgroundFillStyle("#eed");
     context.scale(1,1); //size
 
     // Set default color of renderer to match theme
     context.setFillStyle('var(--text-color');
     context.setStrokeStyle('var(--text-color');
 
+
     // Create a stave of width box_width at position 0, 0 within the div.
     // Set color when stave is created (stave isnt connected to defaults for some reason)
-    let stave = new VF.Stave(0, 0, box_width, {fill_style: 'var(--sub-color)'});
+    // http://www.vexflow.com/build/docs/stave.html
+    let stave = new VF.Stave(0, 0, box_width, {fill_style: 'var(--sub-color)', space_above_staff_ln: 0});
+    stave.measure = row + 1;
+    stave.resetLines()
 
     // vertically center stave in div 
     // find VF.Stave properties here https://github.com/0xfe/vexflow/blob/master/src/stave.ts
-    stave.setY((box_height - stave.getBottomY()) / 2)
-
-    // Add a clef and time signature.
+    stave.setY((box_height - (stave.getBottomLineBottomY() - stave.getTopLineTopY())) / 2)
+ 
+    
+    //  Add a clef and time signature.
     stave.addClef("treble")
     stave.addTimeSignature("4/4");
     let keySignature = 'A'
     stave.addKeySignature(keySignature)
 
+
+    
     // Connect it to the rendering context and draw!
     stave.setContext(context).draw();
-
+    
     // get the notes that belong in this row
     let current_row_notes = note_list.slice(row * notes_per_row, (row + 1) * notes_per_row)
     
@@ -83,14 +87,22 @@ rowsDivs.forEach((div, row) => {
     var formatter = new VF.Formatter().joinVoices([voice]).format([voice], box_width);
 
     voice.draw(context, stave);
-});
 
+    // place the caret at the start of the line
+    div.getElementsByClassName("caret")[0].setAttribute("style", `transform: translateX(${box_width/2}px) translateY(${(box_height - 60)/2}px)`)
+}
 
 function addStaveElement () {
     // create a new div element and set its id
     const newDiv = document.createElement("div");
-    newDiv.setAttribute("class", "stave")
+    newDiv.setAttribute("class", "stave");
     newDiv.setAttribute("id", "stave-" + row);
+    
+    // add a caret to the stave div, animation: None, opacity: 0
+    const newCaret = document.createElement("div");
+    newCaret.setAttribute("class", "caret");
+    newCaret.setAttribute("style", "animation-name: None")
+    newDiv.appendChild(newCaret);
 
     // append to parentDiv
     document.getElementById("music-container").appendChild(newDiv);

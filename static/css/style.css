@@ -36,7 +36,9 @@ body {
     grid-gap: 1em;
 }
 
-
+.hidden {
+    opacity: 0;
+}
 
 #music-container {
     grid-column: 1/3;
@@ -49,7 +51,7 @@ body {
     border: solid 1px #fff;
 }
 
-#music-container > div:not(#caret) {
+#music-container > div:not(.caret) {
     border: solid 1px #f00
 }
 

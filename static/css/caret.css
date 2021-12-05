@@ -1,5 +1,5 @@
-#caret {
-    height: 5em;
+.caret {
+    height: 60px;
     width: 3px;
     background: var(--caret-color);
     border-radius: 5px;
