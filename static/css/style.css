@@ -29,8 +29,11 @@ body {
     height: 100vh;
     grid-template-columns: 1fr 3fr 1fr;
 }
+
+
 .center-content {
     display:grid;
+    min-width: 1000px;
     grid-template-columns: 2fr 1fr;
     grid-template-rows: 1fr 10fr 2fr;
     grid-gap: 1em;
@@ -51,11 +54,15 @@ body {
     padding: 0em;
 }
 
-
 .stave {
     max-height: 9em;
     border: solid 0px #f00;
 }
+
+svg {
+    overflow:visible;
+}
+
 
 .center-content > div{
     border: solid 0px #fff;
