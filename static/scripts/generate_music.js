@@ -16,7 +16,7 @@
 function generate_music(conf) {
 
     // use defaults for key value pairs absent in passed configuration object
-    for (var key in generate_music_defaults){
+    for (let key in generate_music_defaults){
         if (!conf[key]) {
             conf[key] = generate_music_defaults[key];
         }
@@ -33,7 +33,7 @@ function generate_music(conf) {
     for (let index = 0; index < conf.n; index++) {
 
         // remove notes where interval from previous note is too big
-        var filteredScaleNotes = removeLargeIntervals(note_list, slicedScaleNotes, conf.max_interval)
+        let filteredScaleNotes = removeLargeIntervals(note_list, slicedScaleNotes, conf.max_interval)
 
         // put new note into a list (so chords are easily supported later)
         let newNote = [pianoToLO(filteredScaleNotes[Math.floor(Math.random() * filteredScaleNotes.length)])];

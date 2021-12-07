@@ -1,9 +1,8 @@
 // add stem direction
-
 const VF = Vex.Flow;
 
 // generate notes and add them
-let note_count = 20;
+let note_count = 60;
 let note_list = generate_music({
     n : note_count,
     max_interval: 6,
@@ -28,15 +27,17 @@ const music_container = document.getElementById("music-container");
 music_container.style.gridTemplateRows = "repeat(" + row_count + ", 1fr)";
 
 // draw music into each rowDiv
-rowsDivs.forEach(renderStaveIntoElement);
+rowsDivs.forEach((div, row) => {
+    renderStaveIntoElement(div, row, VF)
+});
 
-function renderStaveIntoElement (div, row) {
+function renderStaveIntoElement (div, row, VF) {
     // create an SVG renderer and attach it to the div element
     const renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
 
     // Configure the rendering context.
     let box_height = div.offsetHeight;
-    let box_width = 0.995*div.offsetWidth;
+    let box_width = div.offsetWidth;
     renderer.resize(box_width, box_height);
 
     const context = renderer.getContext();
