@@ -50,3 +50,13 @@
     //else place without padding
     return posX - caretCenter;
 }
+
+
+function moveCaret (caretConfigObject) {
+    caretConfigObject.pos++;
+
+    const caretHeight = parseInt($(".caret").css("height"));
+    const caretWidth = parseInt($(".caret").css("width"));
+    const caretPadding = caretWidth + 1;
+    $(`#caret-${caretConfigObject.caretNumber}`).css("transform",`translateX(${getCaretXOnTickableN(caretConfigObject.pos, caretConfigObject.voice, caretWidth, caretPadding)}px) translateY(${(caretConfigObject.box_height - caretHeight)/2}px)`);
+}

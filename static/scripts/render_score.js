@@ -6,7 +6,7 @@ let note_count = 60;
 let note_list = generate_music({
     n : note_count,
     max_interval: 6,
-    scale: 3});
+    scale: 4});
 
 // set how many notes you want per row
 let notes_per_row = 20;
@@ -26,9 +26,10 @@ for (let row = 0; row < row_count; row++) {
 const music_container = document.getElementById("music-container");
 music_container.style.gridTemplateRows = "repeat(" + row_count + ", 1fr)";
 
-// draw music into each rowDiv
+
+// draw music into each rowDiv and save caret config objects into list
 rowsDivs.forEach((div, row) => {
-    renderStaveIntoElement(div, row, VF)
+    caret_config_objects.push(renderStaveIntoElement(div, row, VF))
 });
 
 function renderStaveIntoElement (div, row, VF) {
@@ -60,7 +61,7 @@ function renderStaveIntoElement (div, row, VF) {
     //  Add a clef and time signature.
     stave.addClef("treble");
     //stave.addTimeSignature("4/4");
-    let keySignature = 'A';
+    let keySignature = 'C';
     stave.addKeySignature(keySignature);
 
     // Connect it to the rendering context and draw!
@@ -72,13 +73,15 @@ function renderStaveIntoElement (div, row, VF) {
     // and converts to list of vexflow StaveNote objects;
     let notes = []
     current_row_notes.forEach(note => {
-        notes.push(new VF.StaveNote({clef : "treble", keys: note, duration: "q"}));
+        let staveNote = new VF.StaveNote({clef : "treble", keys: note, duration: "q"})
+        staveNote.setStyle({shadowBlur:0, fillStyle:'var(--error-color)', strokeStyle:'var(--error-color)'});
+        notes.push(staveNote);
     });
 
     let voice = new VF.Voice({num_beats: current_row_notes.length, beat_value: 4});
     voice.addTickables(notes);
 
-    //apply accidental symbols based on key signature
+    //apply accidental symbols based on key signature   
     VF.Accidental.applyAccidentals([voice], keySignature); 
 
     // -10 to leave some padding before the end of the stave (for very high notes_per_row values)
@@ -94,15 +97,18 @@ function renderStaveIntoElement (div, row, VF) {
     const caretHeight = parseInt($(".caret").css("height"));
     const caretWidth = parseInt($(".caret").css("width"));
     const caretPadding = caretWidth + 1;
+    const caretStartPos = 0
 
     $(`#caret-${row}`).css("transform",`translateX(${getCaretXOnTickableN(0, voice, caretWidth, caretPadding)}px) translateY(${(box_height - caretHeight)/2}px)`);
  
     // for 0th row caret: remove class hidden and apply flashing animation
     if (row === 0) {
-        $(`#caret-${row}`).css({"class": "caret", "animation-name": "caretFlashSmooth"})        
-        $(`#caret-${row}`).css("transform",`translateX(${getCaretXOnTickableN(3, voice, caretWidth, caretPadding)}px) translateY(${(box_height - caretHeight)/2}px)`);
+        $(`#caret-${row}`).css({"class": "caret", "animation-name": "caretFlashSmooth"});
+        $(`#caret-${row}`).css("transform",`translateX(${getCaretXOnTickableN(caretStartPos, voice, caretWidth, caretPadding)}px) translateY(${(box_height - caretHeight)/2}px)`);
     }
     
+    // return caret config object used to calc caret positions on this stave later
+    return {caretNumber: row, pos: caretStartPos, voice: voice, box_height: box_height};
 }
 
 function addStaveElement (row) {

@@ -47,6 +47,16 @@ function handleMIDIInput(input) {
 function noteOn(note) {
     midi_vars.noteOnCount++;
     midi_vars.currentlyOn.push(note);
+
+    let cConfig = caret_config_objects[0]
+    if (cConfig.voice.tickables[cConfig.pos].keys[0] === MIDIToLO(note)) {
+        moveCaret(caret_config_objects[0])
+        console.log("CORRECT")
+    }
+    else {
+        console.log("WRONG")
+    }
+    
 }
 
 /**

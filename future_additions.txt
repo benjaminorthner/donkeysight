@@ -1,1 +1,2 @@
 #AI generated note sequences (https://hello-magenta.glitch.me/) or OpenAI MuseNet
+# make notes disappear somehow that you only have limited time to look at them and recognise them
