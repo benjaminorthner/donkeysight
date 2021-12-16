@@ -7,7 +7,12 @@ let generate_music_defaults = {
     max: LOToPiano("c/6"),
     scale: 4, // Cmaj
     max_interval: 88
-}
+};
+
+// configuartions that affect behaviour
+let generalConfigObject = {
+    continueWhenIncorrect : true
+};
 
 // object that groups variables related to reading midi input
 let midi_vars = {
@@ -15,7 +20,7 @@ let midi_vars = {
     noteOffCount : 0,
     currentlyOn: [],
     stream: []
-}
+};
 
-//caret config object contains info used to calc caret positions for each stave {caretNumber, pos, voice, box_height}
-let caret_config_objects = []
+//stave config object contains info used to calc caret positions for each stave {caretJQ, caretNumber, caretPos, caretPadding, voice, noteDivList, box_height}
+let staveConfigObjects  = [];

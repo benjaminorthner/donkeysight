@@ -1,2 +1,9 @@
 #AI generated note sequences (https://hello-magenta.glitch.me/) or OpenAI MuseNet
 # make notes disappear somehow that you only have limited time to look at them and recognise them
+
+REFERENCE THIS FOR FAST NOTE COLORING
+https://github.com/opensheetmusicdisplay/opensheetmusicdisplay/issues/549;
+
+HOW TO USE VIRTUAL MIDI KEYBOARD:
+start LoopMIDI software and set up PORT
+start VMPK and select under MIDI connections: Output MIDI connections as LoopMIDI port name

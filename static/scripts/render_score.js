@@ -27,12 +27,16 @@ const music_container = document.getElementById("music-container");
 music_container.style.gridTemplateRows = "repeat(" + row_count + ", 1fr)";
 
 
-// draw music into each rowDiv and save caret config objects into list
+// draw music into each rowDiv and save stave config object into list
 rowsDivs.forEach((div, row) => {
-    caret_config_objects.push(renderStaveIntoElement(div, row, VF))
+    
+    // get the notes that belong in this row
+    let current_row_notes = note_list.slice(row * notes_per_row, (row + 1) * notes_per_row);
+    
+    staveConfigObjects.push(renderStaveIntoElement(div, current_row_notes, row, VF))
 });
 
-function renderStaveIntoElement (div, row, VF) {
+function renderStaveIntoElement (div, current_row_notes, row, VF) {
     // create an SVG renderer and attach it to the div element
     const renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
 
@@ -67,14 +71,11 @@ function renderStaveIntoElement (div, row, VF) {
     // Connect it to the rendering context and draw!
     stave.setContext(context).draw();
     
-    // get the notes that belong in this row
-    let current_row_notes = note_list.slice(row * notes_per_row, (row + 1) * notes_per_row);
-    
     // and converts to list of vexflow StaveNote objects;
     let notes = []
     current_row_notes.forEach(note => {
         let staveNote = new VF.StaveNote({clef : "treble", keys: note, duration: "q"})
-        staveNote.setStyle({shadowBlur:0, fillStyle:'var(--error-color)', strokeStyle:'var(--error-color)'});
+        staveNote.setStyle({shadowBlur:0, fillStyle:'var(--sub-color)', strokeStyle:'var(--sub-color)'});
         notes.push(staveNote);
     });
 
@@ -94,21 +95,24 @@ function renderStaveIntoElement (div, row, VF) {
 
  
     // place the caret at the start of the line
-    const caretHeight = parseInt($(".caret").css("height"));
-    const caretWidth = parseInt($(".caret").css("width"));
-    const caretPadding = caretWidth + 1;
+    const caretJQ = $(`#caret-${row}`)
+    const caretHeight = parseInt(caretJQ.css("height"));
+    const caretWidth = parseInt(caretJQ.css("width"));
+    const caretPadding = 2*caretWidth;
     const caretStartPos = 0
 
-    $(`#caret-${row}`).css("transform",`translateX(${getCaretXOnTickableN(0, voice, caretWidth, caretPadding)}px) translateY(${(box_height - caretHeight)/2}px)`);
+    caretJQ.css("transform",`translateX(${getCaretXOnTickableN(0, voice, caretWidth, caretPadding)}px) translateY(${(box_height - caretHeight)/2}px)`);
  
     // for 0th row caret: remove class hidden and apply flashing animation
     if (row === 0) {
-        $(`#caret-${row}`).css({"class": "caret", "animation-name": "caretFlashSmooth"});
-        $(`#caret-${row}`).css("transform",`translateX(${getCaretXOnTickableN(caretStartPos, voice, caretWidth, caretPadding)}px) translateY(${(box_height - caretHeight)/2}px)`);
+        caretJQ.css({"class": "caret", "animation-name": "caretFlashSmooth"});
+        caretJQ.css("transform",`translateX(${getCaretXOnTickableN(caretStartPos, voice, caretWidth, caretPadding)}px) translateY(${(box_height - caretHeight)/2}px)`);
     }
+    // get list of all note DOM objects (needed for coloring later)
+    let noteDivList = div.querySelectorAll('.vf-stavenote')
     
-    // return caret config object used to calc caret positions on this stave later
-    return {caretNumber: row, pos: caretStartPos, voice: voice, box_height: box_height};
+    // return stave config object used to calc caret positions on this stave later
+    return {caretJQ: caretJQ, caretNumber: row, caretPos: caretStartPos, caretPadding: caretPadding, voice: voice, noteDivList: noteDivList, box_height: box_height};
 }
 
 function addStaveElement (row) {
