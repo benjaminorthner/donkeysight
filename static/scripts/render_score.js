@@ -1,40 +1,44 @@
-// add stem direction
-const VF = Vex.Flow;
+renderScore()
 
-// generate notes and add them
-let note_count = 60;
-let note_list = generate_music({
-    n : note_count,
-    max_interval: 6,
-    scale: 4});
+function renderScore () {
+    // still need to add stem direction
+    const VF = Vex.Flow;
 
-// set how many notes you want per row
-let notes_per_row = 20;
+    // generate notes and add them
+    let totalNoteCount = generalConfigObject.totalNoteCount;
+    let notesPerRow = generalConfigObject.notesPerRow;
 
-// calculate how many rows we need
-let row_count = Math.ceil(note_count / notes_per_row);
+    let note_list = generate_music({
+        n : totalNoteCount,
+        max_interval: 6,
+        scale: 4});
 
-// for proper rendering we need to create all visible divs first, before rendering music
-// save Div for every row in an array
-let rowsDivs = []
-for (let row = 0; row < row_count; row++) {
-    // create new <div> to render Stave in
-    rowsDivs.push(addStaveElement(row));
+    // calculate how many rows we need
+    let row_count = Math.ceil(totalNoteCount / notesPerRow);
+
+    // for proper rendering we need to create all visible divs first, before rendering music
+    // save Div for every row in an array
+    let rowsDivs = []
+    for (let row = 0; row < row_count; row++) {
+        // create new <div> to render Stave in
+        rowsDivs.push(addStaveElement(row));
+    }
+
+    // update CSS for #music-container to match number of rows
+    const music_container = document.getElementById("music-container");
+    music_container.style.gridTemplateRows = "repeat(" + row_count + ", 1fr)";
+
+
+    // draw music into each rowDiv and save stave config object into list
+    rowsDivs.forEach((div, row) => {
+        
+        // get the notes that belong in this row
+        let current_row_notes = note_list.slice(row * notesPerRow, (row + 1) * notesPerRow);
+        
+        staveConfigObjects.push(renderStaveIntoElement(div, current_row_notes, row, VF))
+    });
 }
 
-// update CSS for #music-container to match number of rows
-const music_container = document.getElementById("music-container");
-music_container.style.gridTemplateRows = "repeat(" + row_count + ", 1fr)";
-
-
-// draw music into each rowDiv and save stave config object into list
-rowsDivs.forEach((div, row) => {
-    
-    // get the notes that belong in this row
-    let current_row_notes = note_list.slice(row * notes_per_row, (row + 1) * notes_per_row);
-    
-    staveConfigObjects.push(renderStaveIntoElement(div, current_row_notes, row, VF))
-});
 
 function renderStaveIntoElement (div, current_row_notes, row, VF) {
     // create an SVG renderer and attach it to the div element
@@ -57,6 +61,7 @@ function renderStaveIntoElement (div, current_row_notes, row, VF) {
     // Set color when stave is created (stave isnt connected to defaults for some reason)
     // http://www.vexflow.com/build/docs/stave.html
     let stave = new VF.Stave(0, 0, box_width, {fill_style: 'var(--sub-color)', space_above_staff_ln: 0});
+    runStatsObject.totalStaveCount++;
 
     // vertically center stave in div 
     // find VF.Stave properties here https://github.com/0xfe/vexflow/blob/master/src/stave.ts
@@ -85,7 +90,7 @@ function renderStaveIntoElement (div, current_row_notes, row, VF) {
     //apply accidental symbols based on key signature   
     VF.Accidental.applyAccidentals([voice], keySignature); 
 
-    // -10 to leave some padding before the end of the stave (for very high notes_per_row values)
+    // -10 to leave some padding before the end of the stave (for very high notesPerRow values)
     const note_drawing_width = stave.getNoteEndX() - stave.getNoteStartX() - 10;
 
     // format notes on voice and draw

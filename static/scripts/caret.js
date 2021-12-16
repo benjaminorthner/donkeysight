@@ -55,50 +55,30 @@
  * moves the caret one note ahead and colors the previous correct note
  * @param {object} staveConfigObject 
  */
-function moveCaret (staveConfigObject) {
+function moveCaret () {
+    let staveConfigObject = staveConfigObjects[runStatsObject.currentStave]
 
     // move caret to next note
-    staveConfigObject.caretPos++;
-    const caretHeight = parseInt(staveConfigObject.caretJQ.css("height"));
-    const caretWidth = parseInt(staveConfigObject.caretJQ.css("width"));    
-    staveConfigObject.caretJQ.css("transform",`
-        translateX(${getCaretXOnTickableN(staveConfigObject.caretPos, staveConfigObject.voice, caretWidth, staveConfigObject.caretPadding)}px) 
-        translateY(${(staveConfigObject.box_height - caretHeight)/2}px)`);
-}
-
-function playedCorrectNote (staveConfigObject) {
-
-    // color note as playedCorrectly
-    colorNote(staveConfigObject.noteDivList[staveConfigObject.caretPos], true);
-    // move caret 1 note ahead
-    moveCaret(staveConfigObject);
-}
-
-function playedWrongNote (staveConfigObject) {
-    // color note as played incorrectly
-    colorNote(staveConfigObject.noteDivList[staveConfigObject.caretPos], false)
-
-    if (generalConfigObject.continueWhenIncorrect) {
-        moveCaret(staveConfigObject);
+    if (staveConfigObject.caretPos < staveConfigObject.voice.tickables.length - 1){
+        staveConfigObject.caretPos++;
+        const caretHeight = parseInt(staveConfigObject.caretJQ.css("height"));
+        const caretWidth = parseInt(staveConfigObject.caretJQ.css("width"));    
+        staveConfigObject.caretJQ.css("transform",`
+            translateX(${getCaretXOnTickableN(staveConfigObject.caretPos, staveConfigObject.voice, caretWidth, staveConfigObject.caretPadding)}px) 
+            translateY(${(staveConfigObject.box_height - caretHeight)/2}px)`);
     }
-}
-/**
- * Colors a note div (needs to be reworked for chords)
- * @param {} noteDiv element containing noteHead and stem
- * @param {boolean} playedCorrectly determines if correct or error color is used
- */
-function colorNote (noteDiv, playedCorrectly) {
-    
-    let color = "";
-    if (playedCorrectly) {
-        color = 'var(--text-color)';
+    // move caret to next stave
+    else if (runStatsObject.currentStave < runStatsObject.totalStaveCount - 1) {
+        // hide old caret
+        staveConfigObject.caretJQ.css({"class": "caret hidden", "animation-name" : "None"});
+        runStatsObject.currentStave++;
+
+        // get new configObj for new stave and unhide caret
+        staveConfigObject = staveConfigObjects[runStatsObject.currentStave];
+        staveConfigObject.caretJQ.css({"class": "caret", "animation-name": "caretFlashSmooth"});
     }
+    // end the run
     else {
-        color = 'var(--error-color)';
+        endRun();
     }
-    console.log(noteDiv)
-    noteDiv.querySelectorAll('path').forEach((path) => {
-        path.setAttribute('fill', color)
-        path.setAttribute('stroke', color)
-    });
 }

@@ -47,17 +47,8 @@ function handleMIDIInput(input) {
 function noteOn(note) {
     midi_vars.noteOnCount++;
     midi_vars.currentlyOn.push(note);
-
-    let staveConfigObject = staveConfigObjects[0]
-    if (staveConfigObject.voice.tickables[staveConfigObject.caretPos].keys[0] === MIDIToLO(note)) {
-        playedCorrectNote(staveConfigObject)
-        console.log("CORRECT")
-    }
-    else {
-        playedWrongNote(staveConfigObject)
-        console.log("WRONG")
-    }
     
+    checkOnNotes(midi_vars.currentlyOn)    
 }
 
 /**

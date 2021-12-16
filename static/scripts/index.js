@@ -11,7 +11,18 @@ let generate_music_defaults = {
 
 // configuartions that affect behaviour
 let generalConfigObject = {
-    continueWhenIncorrect : true
+    continueWhenIncorrect : true,
+    totalNoteCount: 60,
+    notesPerRow: 20
+};
+
+// collects statistics about current run
+let runStatsObject = {
+    notesPlayed : 0,
+    correctNotesPlayed : 0,
+    incorrectNotesPlayed : 0,
+    currentStave: 0,
+    totalStaveCount: 0
 };
 
 // object that groups variables related to reading midi input
