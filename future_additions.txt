@@ -7,3 +7,6 @@ https://github.com/opensheetmusicdisplay/opensheetmusicdisplay/issues/549;
 HOW TO USE VIRTUAL MIDI KEYBOARD:
 start LoopMIDI software and set up PORT
 start VMPK and select under MIDI connections: Output MIDI connections as LoopMIDI port name
+
+
+# Experient with changing color of entire staff if every note was played correctly within it

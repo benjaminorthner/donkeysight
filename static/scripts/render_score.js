@@ -53,8 +53,8 @@ function renderStaveIntoElement (div, current_row_notes, row, VF) {
     context.scale(1,1); //size
 
     // Set default color of renderer to match theme
-    context.setFillStyle('var(--text-color');
-    context.setStrokeStyle('var(--text-color');
+    context.setFillStyle('var(--sub-color');
+    context.setStrokeStyle('var(--sub-color');
 
 
     // Create a stave of width box_width at position 0, 0 within the div.

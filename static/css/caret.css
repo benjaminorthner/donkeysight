@@ -1,10 +1,16 @@
 .caret {
-    height: 90px;
-    width: 3px;
-    background: var(--caret-color);
-    border-radius: 3px;
-    position: absolute;
-    transform-origin: top left;
-    animation: caretFlashSmooth 1s infinite;
+  height: 90px;
+  width: 3px;
+  background: var(--caret-color);
+  border-radius: 3px;
+  position: absolute;
+  -webkit-transform-origin: top left;
+          transform-origin: top left;
+  -webkit-animation: caretFlashSmooth 1s infinite;
+          animation: caretFlashSmooth 1s infinite;
+  -webkit-transition: -webkit-transform 0.05s ease-out;
+  transition: -webkit-transform 0.05s ease-out;
+  transition: transform 0.05s ease-out;
+  transition: transform 0.05s ease-out, -webkit-transform 0.05s ease-out;
 }
-
+/*# sourceMappingURL=caret.css.map */

@@ -1,22 +1,42 @@
-@keyframes caretFlashSmooth {
-    0%,
-    100% {
-      opacity: 0;
-    }
-  
-    50% {
-      opacity: 1;
-    }
+@-webkit-keyframes caretFlashSmooth {
+  0%,
+  100% {
+    opacity: 0;
   }
+  50% {
+    opacity: 1;
+  }
+}
 
-  @keyframes caretFlashHard {
-    0%,
-    50% {
-      opacity: 1;
-    }
-  
-    51%,
-    100% {
-      opacity: 0;
-    }
+@keyframes caretFlashSmooth {
+  0%,
+  100% {
+    opacity: 0;
   }
+  50% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes caretFlashHard {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes caretFlashHard {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+/*# sourceMappingURL=animations.css.map */
