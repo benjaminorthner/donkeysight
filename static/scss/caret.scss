@@ -1,0 +1,11 @@
+.caret {
+    height: 90px;
+    width: 3px;
+    background: var(--caret-color);
+    border-radius: 3px;
+    position: absolute;
+    transform-origin: top left;
+    animation: caretFlashSmooth 1s infinite;
+    transition: transform 0.05s ease-out;
+}
+

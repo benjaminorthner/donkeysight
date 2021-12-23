@@ -1,0 +1,141 @@
+body {
+    background-color: var(--bg-color);
+    color: var(--main-color);
+    overflow-x: hidden;
+}
+
+.logo-text {
+    color: var(--main-color);
+    font-family: 'Consolas';
+    font-size: 1.75em;
+}
+.logo-text:hover {
+    color: var(--main-color);
+    text-decoration: none;
+}
+
+/* override boostrap navbar colors */
+.navbar-light .navbar-nav .nav-link {
+    color: var(--sub-color);
+}
+.navbar-light .navbar-nav .nav-link:hover {
+    color: var(--text-color);
+}
+
+
+.space-around{
+    display:grid;
+    width: 100vw;
+    height: 100vh;
+    grid-template-columns: 1fr 3fr 1fr;
+}
+
+
+.center-content {
+    display:grid;
+    min-width: 1000px;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 10fr 2fr;
+    grid-gap: 1em;
+}
+
+#top {
+    grid-template-areas: "logo menu config";
+    padding: 0 5px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#top .logo {
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.5rem;
+    white-space: nowrap;
+}
+
+#top .logo .icon {
+    display: grid;
+    align-items: center;
+}
+
+#top .logo .text {
+    position: relative;
+    font-size: 2rem;
+    margin-bottom: 0rem;
+    font-family: 'consolas';
+    transition: .25s;
+}
+
+#top .config {
+    justify-self: right;
+    display: grid;
+    grid-template-rows: 0.7rem 0.7rem 0.7rem;
+    grid-gap: 0.2rem;
+    justify-items: self-end;
+}
+
+#top .config .group {
+    transition: .25s;
+}
+
+#top .config .group .buttons {
+    font-size: .7rem;
+    line-height: .7rem;
+    display: flex;
+}
+
+#top > div {
+    border: solid 0px #fff;
+}
+
+#music-space-around {
+    grid-column: 1/2;
+    display: grid;
+    grid-template-rows: 1fr min-content 1fr;
+}
+
+#music-container {
+    display: grid;
+    padding: 0em;
+}
+
+.stave {
+    max-height: 9em;
+    border: solid 0px #f00;
+}
+
+svg {
+    overflow:visible;
+}
+
+
+.center-content > div{
+    border: solid 0px #fff;
+}
+
+
+
+#info-bar {
+    grid-column: 1/3;
+    text-align: center;
+    color: var(--sub-color);
+}
+
+.hidden {
+    opacity: 0;
+}
+
+.text-button {
+    transition: 0.25s;
+    color: var(--sub-color);
+    cursor: pointer;
+    margin-right: 0.25rem;
+}
+
+.text-button.active {
+    color: var(--main-color);
+}
