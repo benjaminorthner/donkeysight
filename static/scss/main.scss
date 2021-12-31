@@ -8,10 +8,11 @@ body {
     color: var(--main-color);
     font-family: 'Consolas';
     font-size: 1.75em;
-}
-.logo-text:hover {
-    color: var(--main-color);
-    text-decoration: none;
+
+    &:hover {
+        color: var(--main-color);
+        text-decoration: none;
+    }
 }
 
 /* override boostrap navbar colors */
@@ -37,6 +38,10 @@ body {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 10fr 2fr;
     grid-gap: 1em;
+
+    > div{
+        border: solid 0px #fff;
+    }
 }
 
 #top {
@@ -47,50 +52,51 @@ body {
     grid-template-columns: auto 1fr auto;
     align-items: center;
     gap: 0.5rem;
+
+    .logo {
+        cursor: pointer;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 0.5rem;
+        white-space: nowrap;
+
+        .icon {
+            display: grid;
+            align-items: center;
+        }
+
+        .text {
+            position: relative;
+            font-size: 2rem;
+            margin-bottom: 0rem;
+            font-family: 'consolas';
+            transition: .25s;
+        }
+    }
+
+    .config {
+        justify-self: right;
+        display: grid;
+        grid-template-rows: 0.7rem 0.7rem 0.7rem;
+        grid-gap: 0.2rem;
+        justify-items: self-end;
+
+        .group {
+            transition: .25s;
+        }
+
+        .buttons {
+            font-size: .7rem;
+            line-height: .7rem;
+            display: flex;
+        }
+    }
+
+    > div {
+        border: solid 0px #fff;
+    }
 }
 
-#top .logo {
-    cursor: pointer;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 0.5rem;
-    white-space: nowrap;
-}
-
-#top .logo .icon {
-    display: grid;
-    align-items: center;
-}
-
-#top .logo .text {
-    position: relative;
-    font-size: 2rem;
-    margin-bottom: 0rem;
-    font-family: 'consolas';
-    transition: .25s;
-}
-
-#top .config {
-    justify-self: right;
-    display: grid;
-    grid-template-rows: 0.7rem 0.7rem 0.7rem;
-    grid-gap: 0.2rem;
-    justify-items: self-end;
-}
-
-#top .config .group {
-    transition: .25s;
-}
-
-#top .config .group .buttons {
-    font-size: .7rem;
-    line-height: .7rem;
-    display: flex;
-}
-
-#top > div {
-    border: solid 0px #fff;
-}
 
 #music-space-around {
     grid-column: 1/2;
@@ -111,12 +117,6 @@ body {
 svg {
     overflow:visible;
 }
-
-
-.center-content > div{
-    border: solid 0px #fff;
-}
-
 
 
 #info-bar {
