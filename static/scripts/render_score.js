@@ -110,6 +110,7 @@ function renderStaveIntoElement (div, current_row_notes, row, VF) {
  
     // for 0th row caret: remove class hidden and apply flashing animation
     if (row === 0) {
+        caretJQ.removeClass("hidden")
         caretJQ.css({"class": "caret", "animation-name": "caretFlashSmooth"});
         caretJQ.css("transform",`translateX(${getCaretXOnTickableN(caretStartPos, voice, caretWidth, caretPadding)}px) translateY(${(box_height - caretHeight)/2}px)`);
     }
