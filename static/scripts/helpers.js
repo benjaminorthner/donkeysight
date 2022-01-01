@@ -158,3 +158,27 @@ function LOToMIDI(i) {
     }
     return pianoToMIDI(LOToPiano(i))
 }
+
+let themesList = null;
+async function getThemesList() {
+  if (themesList == null) {
+    return $.getJSON("static/themes/_list.json", function (data) {
+      const list = data.sort(function (a, b) {
+        const nameA = a.name.toLowerCase();
+        const nameB = b.name.toLowerCase();
+        if (nameA < nameB) return -1;
+        if (nameA > nameB) return 1;
+        return 0;
+      });
+      themesList = list;
+      return themesList;
+    });
+  } else {
+    return themesList;
+  }
+}
+
+
+function capitalizeFirstLetter(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}

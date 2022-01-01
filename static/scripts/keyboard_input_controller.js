@@ -1,8 +1,7 @@
+// hanndle global keypresses on the main screen
 document.addEventListener('keydown', evt => {
     if (evt.key === 'Escape') {
-        console.log("ESPCAE")
         if ($("#commandLineWrapper").hasClass("hidden")){
-            console.log("SHOW")
             showCommandLine();
         }
         else {
@@ -11,8 +10,15 @@ document.addEventListener('keydown', evt => {
     }
 });
 
+// handle commandline input field inputs
 $("#commandLine input")[0].addEventListener('keydown', evt => {
     if (evt.key === 'Escape') {
         hideCommandLine();
+        return;
     }
-})
+  
+    // update suggested commands within timeout to catch latest character
+    setTimeout (() => {
+        updateSuggested()
+    }, 0);
+});
