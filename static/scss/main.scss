@@ -9,6 +9,11 @@ body {
     overflow-x: hidden;
 }
 
+.ffscroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--sub-color) transparent;
+}
+
 .logo-text {
     color: var(--main-color);
     font-family: 'Consolas';

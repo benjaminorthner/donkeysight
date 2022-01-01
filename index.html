@@ -23,6 +23,7 @@
         <!-- load theme then stylesheet (in that order)-->
         <link rel="stylesheet" href="static/themes/carbon.css" id="currentTheme">
         <link rel="stylesheet" href="static/css/main.css">
+        <link rel="stylesheet" href="static/css/scroll.css">
         <link rel="stylesheet" href="static/css/commandline.css">
         <link rel="stylesheet" href="static/css/caret.css">
         <link rel="stylesheet" href="static/css/animations.css">
@@ -37,11 +38,12 @@
                             grid-template-columns: auto 1fr;
                             align-items: center;
                         ">
-                <div class="searchicon">
-                <!--<i class="fas fa-search"></i>-->
+                    <div class="searchicon">
+                    <i class="textIcon"></i>
+                    </div>
+                    <input type="text" class="input" placeholder="Type to search">
                 </div>
-                <input type="text" class="input" placeholder="Type to search">
-                </div>
+                <div class="suggestions"></div>
             </div>
         </div>
         <div class="space-around">

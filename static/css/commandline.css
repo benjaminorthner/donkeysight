@@ -2,6 +2,11 @@
   --roundness: 0.5rem;
 }
 
+.ffscroll, #commandLineWrapper #commandLine .suggestions {
+  scrollbar-width: thin;
+  scrollbar-color: var(--sub-color) transparent;
+}
+
 #commandLineWrapper {
   width: 100%;
   height: 100%;

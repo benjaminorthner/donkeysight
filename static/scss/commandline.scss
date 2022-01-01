@@ -1,6 +1,10 @@
 :root {
     --roundness: 0.5rem;
 }
+.ffscroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--sub-color) transparent;
+}
 
 #commandLineWrapper {
   width: 100%;
@@ -79,6 +83,7 @@
     .suggestions {
       display: block;
       overflow-y: scroll;
+      @extend .ffscroll;
       max-height: calc(100vh - 10rem - 3rem);
       display: grid;
       cursor: pointer;
